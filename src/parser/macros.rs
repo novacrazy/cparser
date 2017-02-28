@@ -24,7 +24,7 @@ macro_rules! punct (
         use $crate::parser::error::ParseError;
 
         add_return_error!($i,
-            ParseError::InvalidPunctuation.into_nom(),
+            ParseError::InvalidPunctuation($c).into_nom(),
             fix_error!(ParseError, char!($c))
         )
     })
@@ -37,7 +37,7 @@ macro_rules! keyword (
         use $crate::parser::error::ParseError;
 
         add_return_error!($i,
-            ParseError::InvalidKeyword.into_nom(),
+            ParseError::InvalidKeyword($c).into_nom(),
             fix_error!(ParseError, tag!($c))
         )
     })
