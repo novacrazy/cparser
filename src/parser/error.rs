@@ -5,13 +5,14 @@ use nom;
 #[derive(Debug, Clone, Copy, PartialEq, Hash)]
 pub enum ParseError {
     InvalidIdentifier,
+    InvalidString,
     InvalidStringLiteral,
     InvalidEscapeSequence,
     InvalidStringPrefix,
     InvalidPunctuation(char),
     InvalidKeyword(&'static str),
     InvalidStringLikeLiteral,
-    InvalidString,
+    InvalidIntegerLikeLiteral,
 }
 
 impl ParseError {

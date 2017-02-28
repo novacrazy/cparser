@@ -1,5 +1,6 @@
 pub mod string;
 pub mod constant;
+pub mod integer;
 
 use super::ident::Ident;
 
@@ -48,6 +49,7 @@ pub enum Lit {
     },
     StringLike(Ident),
     Integer(IntegerLiteral),
+    IntegerLike(Ident),
     Float(FloatLiteral),
     Char(CharLiteral)
 }
