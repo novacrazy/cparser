@@ -1,0 +1,10 @@
+[package]
+authors = ["Aaron Trent <novacrazy@gmail.com>"]
+name = "cparser"
+version = "0.1.0"
+
+[dependencies]
+
+[dependencies.nom]
+path = "cnom"
+features = ["default", "verbose-errors"]
