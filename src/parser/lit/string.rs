@@ -57,7 +57,7 @@ pub mod parsing {
         many1!(string_literal_prefix));
 
     // String literal internals delimited by " characters
-    named!(raw_delimited_string_literal<&[u8], Vec<&[u8]>, ParseError>, delimited!(
+    named!(raw_delimited_string_literal<&[u8], Vec<&[u8]>, ParseError>, complete!(delimited!(
         // If this doesn't match, we missed an invalid prefix
         // E.g., h"sdf" will skip the h and pass h" to this, so it fails
         add_return_error!(
@@ -66,7 +66,7 @@ pub mod parsing {
         ),
         string_internals,
         punct!('"'))
-    );
+    ));
 
     named!(raw_string_literal<&[u8], Lit, ParseError>, add_return_error!(
         ParseError::InvalidStringLiteral.into_nom(),
