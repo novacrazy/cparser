@@ -1,24 +1,9 @@
-#[derive(Debug, Clone, PartialEq, Hash)]
-pub enum Lit {
-    Str {
-        value: String,
-        unicode: bool,
-        wide: bool,
-    },
-    Integer {
-        value: String,
-        suffix: String,
-    },
-    Float {
-        value: String,
-        suffix: String,
-    }
-}
-
 pub mod parsing {
     use nom::*;
+
     use ::parser::error::ParseError;
-    use super::*;
+    use ::parser::ident::Ident;
+    use ::parser::lit::Lit;
 
     #[derive(Debug, Clone, Copy, PartialEq, Hash)]
     enum StringPrefix {
@@ -87,8 +72,8 @@ pub mod parsing {
     named!(raw_string_literal<&[u8], Lit, ParseError>, add_return_error!(
         ParseError::InvalidStringLiteral.into_nom(),
         do_parse!(
-            prefix: opt!(raw_string_prefix) >>
-            value: raw_delimited_string_literal >> ({
+            prefix: opt!(raw_string_prefix)      >>
+            value:  raw_delimited_string_literal >> ({
                 let value = value.into_iter()
                                  .map(String::from_utf8_lossy)
                                  .fold(String::new(), |acc, s| acc + s.as_ref());
@@ -108,4 +93,9 @@ pub mod parsing {
 
     /// String literal with whitespace consumed
     named!(pub string_literal<&[u8], Lit, ParseError>, wse!(raw_string_literal));
+
+    named!(pub string<&[u8], Lit, ParseError>, wse!(alt_complete!(
+        keyword!("__func__") => { |_| Lit::StringLike(Ident::from("__func__")) } |
+        raw_string_literal
+    )));
 }
