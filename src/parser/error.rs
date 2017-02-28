@@ -8,6 +8,8 @@ pub enum ParseError {
     InvalidStringPrefix,
     InvalidPunctuation,
     InvalidKeyword,
+    InvalidStringLikeLiteral,
+    InvalidString,
 }
 
 impl ParseError {
