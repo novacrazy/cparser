@@ -1,3 +1,4 @@
+#![feature(try_from)]
 #![allow(unused_imports, dead_code)]
 
 #[macro_use]
@@ -18,7 +19,7 @@ fn test_idents() {
         IResult::Error(err) => {
             for err in nom::error_to_list(&err) {
                 if let Some(p_err) = self::parser::error::ParseError::from_nom(&err) {
-                    println!("Error: {:?}", p_err);
+                    println!("Error: {}", p_err);
                 } else {
                     println!("Error: {:?}", err);
                 }
@@ -28,11 +29,10 @@ fn test_idents() {
     }
 }
 
-
 fn test_strings() {
-    let k = br#####" "fxdsdfs \u2154 d \"#   sdf" "#####;
+    let k = br#####"    '\xAFAF'     "#####;
 
-    let res = parser::lit::parsing::string_literal(k);
+    let res = parser::lit::parsing::char_literal(k);
 
     match res {
         IResult::Done(i, o) => {
@@ -42,7 +42,7 @@ fn test_strings() {
         IResult::Error(err) => {
             for err in nom::error_to_list(&err) {
                 if let Some(p_err) = self::parser::error::ParseError::from_nom(&err) {
-                    println!("Error: {:?}", p_err);
+                    println!("Error: {}", p_err);
                 } else {
                     println!("Error: {:?}", err);
                 }

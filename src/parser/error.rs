@@ -2,17 +2,21 @@ use std::fmt::{Display, Debug, Formatter, Result as FmtResult};
 
 use nom;
 
-#[derive(Debug, Clone, Copy, PartialEq, Hash)]
+#[derive(Debug, Clone, PartialEq, Hash)]
 pub enum ParseError {
     InvalidIdentifier,
     InvalidString,
     InvalidStringLiteral,
     InvalidEscapeSequence,
+    InvalidEscapeSequenceDetail(String),
+    InvalidUnicodeValue,
+    InvalidUnicodeValueDetail(String),
     InvalidStringPrefix,
     InvalidPunctuation(char),
     InvalidKeyword(&'static str),
     InvalidStringLikeLiteral,
     InvalidIntegerLikeLiteral,
+    InvalidCharacterLiteral,
 }
 
 impl ParseError {

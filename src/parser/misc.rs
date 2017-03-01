@@ -8,7 +8,6 @@ pub enum StorageClassSpecifier {
     Register,
 }
 
-
 pub mod parsing {
     use super::*;
     use nom::*;
