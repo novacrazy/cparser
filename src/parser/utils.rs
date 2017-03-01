@@ -6,6 +6,7 @@ pub fn escaped_to_char<P>(c: char, iter: &mut ::std::str::Chars) -> Result<char,
     Ok(match c {
         '\\' => '\x5C', // Backslash
         '\'' => '\x27', // Single quotation mark
+        '0' => '\x00', // NULL byte character
         'a' => '\x07', // Alert (Beep, Bell) (added in C89)[1]
         'b' => '\x08', // Backspace
         'f' => '\x0C', // Formfeed

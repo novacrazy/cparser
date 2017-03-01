@@ -104,7 +104,7 @@ pub mod parsing {
     named!(raw_string_character <&[u8], &[u8]>, recognize!(none_of!("\\\n\"")));
     named!(raw_char_character   <&[u8], &[u8]>, recognize!(none_of!("\\\n'")));
 
-    named!(escaped_char         <&[u8], &[u8]>, recognize!(one_of!("\"abfnertv'?\\")));
+    named!(escaped_char         <&[u8], &[u8]>, recognize!(one_of!("\"abfner0tv'?\\")));
     named!(escaped_oct_digit    <&[u8], &[u8]>, recognize!(many_m_n!(1, 3, oct_digit)));
     named!(escaped_hex_digit    <&[u8], &[u8]>, recognize!(preceded!(char!('x'), many1!(hex_digit))));
     named!(escaped_unicode      <&[u8], &[u8]>, recognize!(preceded!(one_of!("uU"), many1!(hex_digit))));
