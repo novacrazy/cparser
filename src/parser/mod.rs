@@ -13,3 +13,4 @@ pub mod expression;
 pub mod function;
 pub mod lit;
 pub mod whitespace;
+pub mod utils;
