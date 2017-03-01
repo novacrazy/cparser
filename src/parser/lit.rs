@@ -121,28 +121,24 @@ pub mod parsing {
     named!(escaped_string_bytes,
         escaped!(raw_string_character, '\\', escaped_character));
 
-    named!(escaped_string_character<&[u8], String, ParseError>, map_res!(
-        fix_error!(ParseError, escaped_string_bytes),
-        map_characters
-    ));
-
     named!(escaped_char_bytes,
         escaped!(raw_char_character, '\\', escaped_character));
-
-    named!(escaped_char_character<&[u8], char, ParseError>, map_res!(
-        fix_error!(ParseError, escaped_char_bytes),
-        map_character
-    ));
 
     // Normal and escaped string characters, with correct error value
     named!(string_character<&[u8], String, ParseError>, add_return_error!(
         ParseError::InvalidEscapeSequence.into_nom(),
-        escaped_string_character
+        map_res!(
+            fix_error!(ParseError, escaped_string_bytes),
+            map_characters
+        )
     ));
 
     named!(char_character<&[u8], char, ParseError>, add_return_error!(
         ParseError::InvalidEscapeSequence.into_nom(),
-        escaped_char_character
+        map_res!(
+            fix_error!(ParseError, escaped_char_bytes),
+            map_character
+        )
     ));
 
     // One of more internal string characters
